@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching for the 99%</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: '#0F766E',
+                        coral: '#E76F51',
+                        midnight: '#1F2937',
+                        stone: '#EDEAE4',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .drawer-transition { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .drawer-hidden { transform: translateX(100%); }
+        .drawer-visible { transform: translateX(0); }
+        .principle-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        @media (hover: hover) {
+            .principle-card:hover { transform: translateY(-8px); border-color: #E76F51; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+            .principle-card:hover .card-action { transform: translateX(4px); color: #E76F51; opacity: 1; }
+        }
+        .text-balance { text-wrap: balance; }
+    </style>
+</head>
+<body class="bg-stone text-midnight antialiased min-h-screen font-sans">
+
+    <!-- Sticky Navigation for Mobile Engagement -->
+    <nav class="sticky top-0 z-30 bg-midnight/95 backdrop-blur-md text-stone px-6 py-4 border-b border-stone/10 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <span class="text-[10px] uppercase tracking-[0.3em] font-black text-coral">99% Coaching</span>
+            <div class="flex gap-4">
+                <a href="#principles" class="text-[10px] uppercase tracking-widest font-bold hover:text-coral transition-colors">Principles</a>
+                <a href="#summary" class="text-[10px] uppercase tracking-widest font-bold hover:text-coral transition-colors">Summary</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Impact Hero Section -->
+    <header class="bg-midnight text-stone pt-20 pb-24 px-6 md:px-12 md:pt-32 md:pb-40 overflow-hidden relative">
+        <!-- Visual Accent -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-teal/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-coral/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="max-w-4xl">
+                <h1 class="text-xs uppercase tracking-[0.4em] font-black text-coral mb-6">A guide for new volleyball coaches</h1>
+                <h2 class="text-5xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-balance">
+                    Coaching for <br class="hidden md:block"> the <span class="text-teal underline decoration-coral underline-offset-[12px]">99 Percent</span>
+                </h2>
+                <p class="text-lg md:text-2xl font-light text-stone/70 leading-relaxed max-w-2xl text-balance">
+                    Inspired by <span class="text-stone font-medium">John Kessel</span>. You don't need elite athletes or a perfect gym to build a legacy.
+                </p>
+                <div class="mt-12 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                    <a href="#principles" class="bg-teal hover:bg-teal/90 text-stone px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs transition-all hover:scale-105 active:scale-95 shadow-lg shadow-teal/20">
+                        Start Exploring
+                    </a>
+                    <span class="text-[10px] uppercase tracking-widest font-bold text-stone/40">19 Principles for Ordinary Players</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Engagement Section: The Mission -->
+    <section class="py-24 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="inline-block px-4 py-1 rounded-full border border-teal/20 text-teal font-black text-[10px] uppercase tracking-widest">The Core Mission</div>
+                    <h3 class="text-4xl md:text-6xl font-black tracking-tight leading-none text-balance">
+                        Help them love it, <br> play it, and return.
+                    </h3>
+                    <p class="text-lg text-midnight/60 leading-relaxed max-w-xl">
+                        If you keep these three things in mind, you will already be doing important work. Everything else follows.
+                    </p>
+                </div>
+                <div class="bg-stone p-8 md:p-12 rounded-[2.5rem] relative">
+                    <div class="text-8xl font-black text-midnight/5 absolute top-4 right-8 select-none">“</div>
+                    <p class="text-xl md:text-2xl font-light leading-snug italic relative z-10">
+                        "You do not need a perfect gym or advanced systems to be a good coach. You just need to build a space where players want to be."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principles Grid: Interactive Dashboard -->
+    <section id="principles" class="py-24 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                <div>
+                    <h3 class="text-xs uppercase tracking-widest font-black text-coral mb-4">The Methodology</h3>
+                    <h4 class="text-4xl md:text-5xl font-black tracking-tight">19 Key Principles</h4>
+                </div>
+                <p class="text-sm text-midnight/40 max-w-xs font-medium">Click any card to dive deeper into the implementation.</p>
+            </div>
+
+            <div id="principles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Cards injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Engagement: Summary Section -->
+    <section id="summary" class="py-24 px-6 md:px-12 bg-midnight text-stone overflow-hidden relative">
+        <div class="absolute top-0 left-1/2 w-[800px] h-[800px] bg-teal/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="grid lg:grid-cols-2 gap-24">
+                <div>
+                    <h3 class="text-xs uppercase tracking-widest font-black text-coral mb-8">Practical Checklist</h3>
+                    <div class="space-y-4" id="summary-checklist">
+                        <!-- Short summary items -->
+                    </div>
+                </div>
+                <div class="space-y-16">
+                    <div>
+                        <h3 class="text-xs uppercase tracking-widest font-black text-coral mb-8">Resources</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div class="space-y-2">
+                                <h4 class="font-bold text-teal">What to read</h4>
+                                <ul class="text-sm text-stone/50 space-y-1">
+                                    <li>Mini Volleyball</li>
+                                    <li>Small-sided Games</li>
+                                    <li>Game-based Learning</li>
+                                </ul>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="font-bold text-teal">Essential Gear</h4>
+                                <ul class="text-sm text-stone/50 space-y-1">
+                                    <li>Nets/Improvised Nets</li>
+                                    <li>Line Markers/Tape</li>
+                                    <li>Pump & Needles</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-sm p-10 rounded-[2.5rem] border border-white/10">
+                        <p class="text-3xl font-light leading-tight italic text-balance mb-6">
+                            "Ordinary players deserve a real chance to experience the joy of the sport."
+                        </p>
+                        <p class="text-xs uppercase tracking-widest font-bold text-teal">Final Thought</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Footer -->
+    <footer class="bg-stone border-t border-midnight/5 py-12 px-6 text-center text-[10px] uppercase tracking-widest font-black text-midnight/20">
+        © 2026 Coaching for the 99 Percent • Inspired by John Kessel
+    </footer>
+
+    <!-- Side Drawer Overlay -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-midnight/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 z-40" onclick="closeDrawer()"></div>
+
+    <!-- Side Drawer (Mobile First: Full width on mobile, partial on desktop) -->
+    <aside id="side-drawer" class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 drawer-transition drawer-hidden flex flex-col">
+        <div class="p-6 border-b border-stone/10 flex justify-between items-center sticky top-0 bg-white z-10">
+            <span id="drawer-num" class="text-xs font-black text-coral border-2 border-coral px-3 py-1 rounded-lg">01</span>
+            <button onclick="closeDrawer()" class="p-2 hover:bg-stone rounded-full transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-8 md:p-12">
+            <h2 id="drawer-title" class="text-4xl font-black mb-10 leading-[0.9] tracking-tight text-balance">Title</h2>
+            <div id="drawer-content" class="space-y-12 pb-12">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </aside>
+
+    <script>
+        const principles = [
+            { id: 1, title: "Love of the game", desc: "Your first job is to help players enjoy the game enough to keep playing.", detail: "Will these players want to come back next season? That matters more than perfect technique.", means: ["Feel successful early", "Keep it fun and active", "Avoid punishment drills", "Never be a player's last coach"], important: "Smiles and engagement are your primary metrics for success." },
+            { id: 2, title: "Learn by doing", desc: "Players learn by moving, touching the ball, and making choices.", detail: "Standing in line is the enemy of development. Maximize active participation.", means: ["More balls = more touches", "Minimize standing in line", "More actual playing time", "Less watching others"], important: "Experience is the only real teacher in volleyball." },
+            { id: 3, title: "Let them play", desc: "Use 1v1, 2v2, and 3v3 to build deep game awareness.", detail: "Small games force players to move, read space, and solve real problems.", means: ["Read the game", "Move to space", "Communicate", "Solve problems"], important: "The game itself is the best teacher we have." },
+            { id: 4, title: "Play over a net", desc: "Always keep the activity recognizable as volleyball.", detail: "Use rope, ribbon, or tape if a net isn't available. The barrier is essential.", means: ["Visual target", "Improvised nets", "Safe space prep", "Recognizable play"], important: "Volleyball isn't volleyball without the net." },
+            { id: 5, title: "Fit the environment", desc: "Lower the net and shrink the court for newer players.", detail: "New players don't need adult conditions. Create success through scale.", means: ["Lower nets", "Smaller courts", "Simple markers", "Success-first setup"], important: "Scale the environment to the human, not the other way around." },
+            { id: 6, title: "Solve problems", desc: "The coach shouldn't control every rep. Let them adjust.", detail: "Too much control gets in the way of growth. Let them fail and try again.", means: ["Set the problem", "Watch closely", "Be a guide", "Allow adjustments"], important: "Growth lives in the struggle of problem-solving." },
+            { id: 7, title: "Talk less", desc: "WAIT: Why Am I Talking? Observe more, speak less.", detail: "When coaches talk constantly, players stop solving and start waiting.", means: ["Observe first", "Ask short questions", "Use stories", "Grow language"], important: "Guidance is not the same as noise." },
+            { id: 8, title: "Coach the person", desc: "A player is more than their skill. Know their story.", detail: "Get to know why they play and what matters to them beyond the court.", means: ["Who they are", "What they enjoy", "Build trust", "Measure confidence"], important: "Relationships are the foundation of great coaching." },
+            { id: 9, title: "Warm up by playing", desc: "Skip traditional laps. Use small games to wake up brains.", detail: "Warm up the body and the mind simultaneously with active 1v1s and 2v2s.", means: ["1 vs 1", "2 vs 2", "Active thinking", "Immediate learning"], important: "Every minute of practice is a minute for learning." },
+            { id: 10, title: "Score with purpose", desc: "Volleyball is a scored game. Use it to focus effort.", detail: "Score what you are trying to teach. Reward decisions, not just outcomes.", means: ["Competitive focus", "Cooperative goals", "Reward intent", "Smart play bonus"], important: "What you score is what your players will value." },
+            { id: 11, title: "Control conditions", desc: "Fatigue hurts learning. Manage the environment.", detail: "Practice when it's cooler. Use shade. A tired brain cannot learn effectively.", means: ["Cooler times", "Shaded areas", "Simple lights", "Mental focus"], important: "Comfortable players are faster learners." },
+            { id: 12, title: "Patience with growth", desc: "Biology doesn't care about birthdays. Keep them in.", detail: "Late developers are still developers. Don't cut based on early maturity.", means: ["Don't cut early", "Room for growth", "Late blooming", "Inclusion focus"], important: "Development is a marathon, not a sprint." },
+            { id: 13, title: "Time on task", desc: "Maximize contacts. Keep the ball alive and moving.", detail: "If the ball is dead, learning is dead. Minimize downtime between reps.", means: ["Quick restarts", "Fast ball return", "Short talk", "Game flow"], important: "Learning is a function of useful contacts." },
+            { id: 14, title: "Catch them being good", desc: "Feedback should be specific, timely, and positive.", detail: "Notice the smart decisions and the aggressive misses. Build their confidence.", means: ["Specific praise", "Timely feedback", "Focus on intent", "Better errors"], important: "Positive reinforcement builds resilient players." },
+            { id: 15, title: "Controllables", desc: "Focus on effort, attitude, and communication.", detail: "Become. Don't compare. Better the ball with every single contact.", means: ["Effort & Attitude", "Communication", "Self-talk", "Better the ball"], important: "Control the things that require zero talent." },
+            { id: 16, title: "Simple systems", desc: "Systems should fit your players, not your ego.", detail: "Don't force advanced systems. Start with basic court numbers and roles.", means: ["Basic roles", "Who sets", "Where to move", "Simple defense"], important: "Complexity is the enemy of execution for new players." },
+            { id: 17, title: "Players as Referees", desc: "Refereeing builds game awareness and responsibility.", detail: "Let them take turns officiating. It's the best way to learn the rules.", means: ["Rules knowledge", "Game perspective", "Responsibility", "Signal usage"], important: "Understanding the game requires seeing it from every angle." },
+            { id: 18, title: "Simple Setting", desc: "Start with success. You don't need advanced sets.", detail: "Teach passing and attacking options that players can actually succeed with.", means: ["Attack earlier", "Build rhythm", "Real contacts", "Success focus"], important: "Success breeds the desire for more challenge." },
+            { id: 19, title: "Festival Formats", desc: "Simple competition keeps everyone in the game.", detail: "Use round robins and timed games. Focus on participation over 'official' feel.", means: ["Round robins", "More matches", "Less confusion", "Max participation"], important: "More play is always the goal of competition." }
+        ];
+
+        const grid = document.getElementById('principles-grid');
+        const summaryChecklist = document.getElementById('summary-checklist');
+        const summaryItems = [
+            "Help players love the game", "Let them play early & often", "Use small-sided games", 
+            "Play over a net", "Adjust court to fit players", "Talk less, ask more", 
+            "Warm up by playing", "Notice what they do well"
+        ];
+
+        summaryItems.forEach(item => {
+            const div = document.createElement('div');
+            div.className = "flex gap-4 items-center group";
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-full border border-teal/30 flex items-center justify-center text-teal text-[10px] font-black group-hover:bg-teal group-hover:text-stone transition-all">✓</div>
+                <span class="text-sm font-medium text-stone/80">${item}</span>
+            `;
+            summaryChecklist.appendChild(div);
+        });
+
+        const colors = ['bg-teal', 'bg-coral', 'bg-midnight'];
+
+        principles.forEach((p, idx) => {
+            const card = document.createElement('div');
+            card.className = "principle-card bg-white p-8 rounded-[2rem] shadow-sm border border-stone/10 cursor-pointer flex flex-col justify-between group";
+            card.onclick = () => openDrawer(p);
+            
+            const color = colors[idx % colors.length];
+            
+            card.innerHTML = `
+                <div class="mb-10">
+                    <div class="w-10 h-1 ${color} rounded-full mb-8"></div>
+                    <span class="text-[10px] font-black text-midnight/20 block mb-3 uppercase tracking-widest">${String(p.id).padStart(2, '0')}</span>
+                    <h3 class="text-2xl font-black text-midnight leading-none tracking-tight mb-4 group-hover:text-teal transition-colors">${p.title}</h3>
+                    <p class="text-sm text-midnight/50 leading-relaxed font-medium">${p.desc}</p>
+                </div>
+                <div class="card-action flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-midnight/30 transition-all">
+                    Detail
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function openDrawer(p) {
+            document.getElementById('drawer-num').innerText = String(p.id).padStart(2, '0');
+            document.getElementById('drawer-title').innerText = p.title;
+            
+            let meansList = p.means.map(m => `
+                <li class="flex gap-4 items-start">
+                    <span class="w-1.5 h-1.5 rounded-full bg-teal mt-2 shrink-0"></span>
+                    <span class="text-base text-midnight/70 font-medium leading-tight">${m}</span>
+                </li>
+            `).join('');
+            
+            document.getElementById('drawer-content').innerHTML = `
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-coral mb-6">Core Concept</h4>
+                    <p class="text-2xl leading-snug text-midnight/90 font-light text-balance">${p.detail}</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-coral mb-6">Application</h4>
+                    <ul class="space-y-6">
+                        ${meansList}
+                    </ul>
+                </div>
+                <div class="bg-stone/50 p-8 rounded-[2rem] border border-midnight/5">
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-teal mb-4">Pro Strategy</h4>
+                    <p class="text-lg font-bold leading-tight text-midnight/80 italic">"${p.important}"</p>
+                </div>
+            `;
+
+            document.getElementById('side-drawer').classList.remove('drawer-hidden');
+            document.getElementById('side-drawer').classList.add('drawer-visible');
+            document.getElementById('drawer-overlay').classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('drawer-overlay').classList.add('opacity-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            document.getElementById('side-drawer').classList.add('drawer-hidden');
+            document.getElementById('side-drawer').classList.remove('drawer-visible');
+            document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('drawer-overlay').classList.remove('opacity-100');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
