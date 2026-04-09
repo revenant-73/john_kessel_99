@@ -5,162 +5,257 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coaching for the 99%</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        teal: '#0F766E',
-                        coral: '#E76F51',
-                        midnight: '#1F2937',
-                        stone: '#EDEAE4',
+                        teal: {
+                            DEFAULT: '#0F766E',
+                            dark: '#0D5E58',
+                            light: '#14B8A6'
+                        },
+                        coral: {
+                            DEFAULT: '#E76F51',
+                            dark: '#D65D40',
+                            light: '#F4A261'
+                        },
+                        midnight: {
+                            DEFAULT: '#0F172A',
+                            dark: '#020617',
+                            light: '#1E293B'
+                        },
+                        stone: '#F8F9FA',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
                     },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'reveal': 'reveal 0.8s cubic-bezier(0, 0, 0.2, 1) forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        reveal: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
     <style>
-        .drawer-transition { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @layer utilities {
+            .glass {
+                @apply bg-white/10 backdrop-blur-xl border border-white/20;
+            }
+            .glass-dark {
+                @apply bg-midnight/40 backdrop-blur-xl border border-white/5;
+            }
+            .bento-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                grid-auto-rows: minmax(200px, auto);
+                gap: 1.5rem;
+            }
+        }
+
+        .drawer-transition { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .drawer-hidden { transform: translateX(100%); }
         .drawer-visible { transform: translateX(0); }
-        .principle-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        @media (hover: hover) {
-            .principle-card:hover { transform: translateY(-8px); border-color: #E76F51; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
-            .principle-card:hover .card-action { transform: translateX(4px); color: #E76F51; opacity: 1; }
+
+        .reveal-on-scroll { opacity: 0; }
+        .reveal-on-scroll.visible { animation: reveal 0.8s cubic-bezier(0, 0, 0.2, 1) forwards; }
+
+        .principle-card { 
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            perspective: 1000px;
         }
+        
+        @media (hover: hover) {
+            .principle-card:hover { 
+                transform: translateY(-12px) scale(1.02); 
+                box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25);
+            }
+            .principle-card:active { transform: translateY(-4px) scale(0.98); }
+        }
+
         .text-balance { text-wrap: balance; }
+        
+        .mesh-gradient {
+            background-color: #0F172A;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.15) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, rgba(231, 111, 81, 0.1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 118, 110, 0.1) 0, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(231, 111, 81, 0.15) 0, transparent 50%);
+        }
+
+        /* Custom Checkbox Animation */
+        .cb-container input:checked ~ .cb-checkmark {
+            @apply bg-teal border-teal;
+        }
+        .cb-container input:checked ~ .cb-checkmark:after {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-stone text-midnight antialiased min-h-screen font-sans">
 
-    <!-- Sticky Navigation for Mobile Engagement -->
-    <nav class="sticky top-0 z-30 bg-midnight/95 backdrop-blur-md text-stone px-6 py-4 border-b border-stone/10 md:px-12">
+    <!-- Sticky Navigation -->
+    <nav class="sticky top-0 z-50 bg-midnight/80 backdrop-blur-xl text-stone px-6 py-4 border-b border-white/5 md:px-12">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <span class="text-[10px] uppercase tracking-[0.3em] font-black text-coral">99% Coaching</span>
-            <div class="flex gap-4">
-                <a href="#principles" class="text-[10px] uppercase tracking-widest font-bold hover:text-coral transition-colors">Principles</a>
-                <a href="#summary" class="text-[10px] uppercase tracking-widest font-bold hover:text-coral transition-colors">Summary</a>
+            <span class="text-[10px] uppercase tracking-[0.4em] font-black text-coral-light">99% Coaching</span>
+            <div class="flex gap-8">
+                <a href="#principles" class="text-[10px] uppercase tracking-widest font-bold hover:text-coral transition-all hover:tracking-[0.2em]">Principles</a>
+                <a href="#summary" class="text-[10px] uppercase tracking-widest font-bold hover:text-coral transition-all hover:tracking-[0.2em]">Summary</a>
             </div>
         </div>
     </nav>
 
     <!-- Impact Hero Section -->
-    <header class="bg-midnight text-stone pt-20 pb-24 px-6 md:px-12 md:pt-32 md:pb-40 overflow-hidden relative">
-        <!-- Visual Accent -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-teal/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-coral/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
+    <header class="mesh-gradient text-stone pt-24 pb-32 px-6 md:px-12 md:pt-40 md:pb-56 overflow-hidden relative">
+        <!-- Animated Blobs -->
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-teal/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-coral/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-teal-light/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
 
         <div class="max-w-7xl mx-auto relative z-10">
-            <div class="max-w-4xl">
-                <h1 class="text-xs uppercase tracking-[0.4em] font-black text-coral mb-6">A guide for new volleyball coaches</h1>
-                <h2 class="text-5xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-balance">
-                    Coaching for <br class="hidden md:block"> the <span class="text-teal underline decoration-coral underline-offset-[12px]">99 Percent</span>
-                </h2>
-                <p class="text-lg md:text-2xl font-light text-stone/70 leading-relaxed max-w-2xl text-balance">
-                    Inspired by <span class="text-stone font-medium">John Kessel</span>. You don't need elite athletes or a perfect gym to build a legacy.
-                </p>
-                <div class="mt-12 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                    <a href="#principles" class="bg-teal hover:bg-teal/90 text-stone px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs transition-all hover:scale-105 active:scale-95 shadow-lg shadow-teal/20">
-                        Start Exploring
-                    </a>
-                    <span class="text-[10px] uppercase tracking-widest font-bold text-stone/40">19 Principles for Ordinary Players</span>
+            <div class="max-w-5xl">
+                <div class="reveal-on-scroll visible">
+                    <h1 class="text-sm uppercase tracking-[0.5em] font-black text-coral-light mb-8 flex items-center gap-4">
+                        <span class="w-12 h-[2px] bg-coral-light"></span>
+                        A guide for new volleyball coaches
+                    </h1>
+                    <h2 class="text-5xl md:text-[10rem] font-display font-extrabold tracking-tighter mb-12 leading-[0.85] text-balance">
+                        Coaching <br> for the <br> <span class="text-teal-light italic">99 Percent</span>
+                    </h2>
+                </div>
+                
+                <div class="reveal-on-scroll visible delay-300">
+                    <p class="text-xl md:text-3xl font-light text-stone/60 leading-tight max-w-3xl text-balance mb-16">
+                        Inspired by <span class="text-stone font-semibold">John Kessel</span>. You don't need elite athletes or a perfect gym to build a legacy.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                        <a href="#principles" class="group bg-teal hover:bg-teal-light text-stone px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-teal/40 flex items-center gap-3">
+                            Start Exploring
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                        <span class="text-[10px] uppercase tracking-widest font-black text-stone/30">19 Principles for Ordinary Players</span>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Engagement Section: The Mission -->
-    <section class="py-24 px-6 md:px-12 bg-white">
+    <section class="py-32 px-6 md:px-12 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="space-y-8">
-                    <div class="inline-block px-4 py-1 rounded-full border border-teal/20 text-teal font-black text-[10px] uppercase tracking-widest">The Core Mission</div>
-                    <h3 class="text-4xl md:text-6xl font-black tracking-tight leading-none text-balance">
-                        Help them love it, <br> play it, and return.
+            <div class="grid lg:grid-cols-2 gap-24 items-center">
+                <div class="space-y-10 reveal-on-scroll">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-stone text-teal font-black text-[10px] uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-coral animate-pulse"></span>
+                        The Core Mission
+                    </div>
+                    <h3 class="text-5xl md:text-7xl font-display font-extrabold tracking-tight leading-none text-balance text-midnight">
+                        Help them love it, play it, and return.
                     </h3>
-                    <p class="text-lg text-midnight/60 leading-relaxed max-w-xl">
+                    <p class="text-xl text-midnight/50 leading-relaxed max-w-xl font-light">
                         If you keep these three things in mind, you will already be doing important work. Everything else follows.
                     </p>
                 </div>
-                <div class="bg-stone p-8 md:p-12 rounded-[2.5rem] relative">
-                    <div class="text-8xl font-black text-midnight/5 absolute top-4 right-8 select-none">“</div>
-                    <p class="text-xl md:text-2xl font-light leading-snug italic relative z-10">
-                        "You do not need a perfect gym or advanced systems to be a good coach. You just need to build a space where players want to be."
-                    </p>
+                <div class="reveal-on-scroll delay-500">
+                    <div class="bg-midnight p-12 md:p-20 rounded-[3rem] relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-teal/10 rounded-full blur-3xl -mr-32 -mt-32 group-hover:bg-coral/10 transition-colors duration-700"></div>
+                        <div class="text-[12rem] font-display font-black text-white/5 absolute -top-10 -right-4 select-none leading-none">“</div>
+                        <p class="text-2xl md:text-4xl font-light leading-tight italic text-stone relative z-10 text-balance">
+                            "You do not need a perfect gym or advanced systems to be a good coach. You just need to build a space where players <span class="text-coral-light font-medium">want to be</span>."
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Principles Grid: Interactive Dashboard -->
-    <section id="principles" class="py-24 px-6 md:px-12">
+    <!-- Principles Grid -->
+    <section id="principles" class="py-32 px-6 md:px-12 bg-stone/50">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-                <div>
-                    <h3 class="text-xs uppercase tracking-widest font-black text-coral mb-4">The Methodology</h3>
-                    <h4 class="text-4xl md:text-5xl font-black tracking-tight">19 Key Principles</h4>
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-24 reveal-on-scroll">
+                <div class="space-y-4">
+                    <h3 class="text-[10px] uppercase tracking-[0.5em] font-black text-coral">The Methodology</h3>
+                    <h4 class="text-5xl md:text-7xl font-display font-extrabold tracking-tight text-midnight">19 Key Principles</h4>
                 </div>
-                <p class="text-sm text-midnight/40 max-w-xs font-medium">Click any card to dive deeper into the implementation.</p>
+                <p class="text-lg text-midnight/40 max-w-sm font-medium leading-snug">Click any card to dive deeper into the implementation details and coaching strategies.</p>
             </div>
 
-            <div id="principles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div id="principles-grid" class="bento-grid">
                 <!-- Cards injected via JS -->
             </div>
         </div>
     </section>
 
-    <!-- Engagement: Summary Section -->
-    <section id="summary" class="py-24 px-6 md:px-12 bg-midnight text-stone overflow-hidden relative">
-        <div class="absolute top-0 left-1/2 w-[800px] h-[800px] bg-teal/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+    <!-- Summary Section -->
+    <section id="summary" class="py-32 px-6 md:px-12 bg-midnight-dark text-stone overflow-hidden relative">
+        <div class="absolute top-0 left-1/2 w-[1000px] h-[1000px] bg-teal/5 rounded-full blur-[160px] -translate-x-1/2 -translate-y-1/2"></div>
         
         <div class="max-w-7xl mx-auto relative z-10">
-            <div class="grid lg:grid-cols-2 gap-24">
-                <div>
-                    <h3 class="text-xs uppercase tracking-widest font-black text-coral mb-8">Practical Checklist</h3>
-                    <div class="space-y-4" id="summary-checklist">
+            <div class="grid lg:grid-cols-2 gap-32">
+                <div class="reveal-on-scroll">
+                    <h3 class="text-[10px] uppercase tracking-[0.5em] font-black text-coral-light mb-12">Practical Checklist</h3>
+                    <div class="space-y-6" id="summary-checklist">
                         <!-- Short summary items -->
                     </div>
                 </div>
-                <div class="space-y-16">
+                <div class="space-y-24 reveal-on-scroll delay-300">
                     <div>
-                        <h3 class="text-xs uppercase tracking-widest font-black text-coral mb-8">Resources</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <div class="space-y-2">
-                                <h4 class="font-bold text-teal">What to read</h4>
-                                <ul class="text-sm text-stone/50 space-y-1">
-                                    <li>Mini Volleyball</li>
-                                    <li>Small-sided Games</li>
-                                    <li>Game-based Learning</li>
+                        <h3 class="text-[10px] uppercase tracking-[0.5em] font-black text-coral-light mb-12">Essential Resources</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+                            <div class="space-y-4">
+                                <h4 class="text-sm font-black text-teal-light uppercase tracking-widest">To Study</h4>
+                                <ul class="text-lg text-stone/40 space-y-3 font-light">
+                                    <li class="hover:text-stone transition-colors cursor-default flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-teal"></span>Mini Volleyball</li>
+                                    <li class="hover:text-stone transition-colors cursor-default flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-teal"></span>Small-sided Games</li>
+                                    <li class="hover:text-stone transition-colors cursor-default flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-teal"></span>Game-based Learning</li>
                                 </ul>
                             </div>
-                            <div class="space-y-2">
-                                <h4 class="font-bold text-teal">Essential Gear</h4>
-                                <ul class="text-sm text-stone/50 space-y-1">
-                                    <li>Nets/Improvised Nets</li>
-                                    <li>Line Markers/Tape</li>
-                                    <li>Pump & Needles</li>
+                            <div class="space-y-4">
+                                <h4 class="text-sm font-black text-teal-light uppercase tracking-widest">Gear List</h4>
+                                <ul class="text-lg text-stone/40 space-y-3 font-light">
+                                    <li class="hover:text-stone transition-colors cursor-default flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-coral"></span>Improvised Nets</li>
+                                    <li class="hover:text-stone transition-colors cursor-default flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-coral"></span>Line Tape</li>
+                                    <li class="hover:text-stone transition-colors cursor-default flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-coral"></span>Pumps & Balls</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white/5 backdrop-blur-sm p-10 rounded-[2.5rem] border border-white/10">
-                        <p class="text-3xl font-light leading-tight italic text-balance mb-6">
-                            "Ordinary players deserve a real chance to experience the joy of the sport."
+                    <div class="glass-dark p-12 md:p-16 rounded-[3rem] border-white/5 relative group">
+                        <p class="text-3xl md:text-5xl font-light leading-[1.1] italic text-balance mb-8 text-stone/90">
+                            "Ordinary players deserve a <span class="text-teal-light">real chance</span> to experience the joy of the sport."
                         </p>
-                        <p class="text-xs uppercase tracking-widest font-bold text-teal">Final Thought</p>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-[1px] bg-coral-light"></span>
+                            <p class="text-[10px] uppercase tracking-[0.4em] font-black text-coral-light">Final Thought</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sticky Footer -->
-    <footer class="bg-stone border-t border-midnight/5 py-12 px-6 text-center text-[10px] uppercase tracking-widest font-black text-midnight/20">
-        © 2026 Coaching for the 99 Percent • Inspired by John Kessel
+    <!-- Footer -->
+    <footer class="bg-midnight-dark py-20 px-6 text-center border-t border-white/5">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <span class="text-[10px] uppercase tracking-[0.6em] font-black text-stone/20">© 2026 Coaching for the 99 Percent</span>
+            <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-teal/40">Inspired by the lifework of John Kessel</p>
+        </div>
     </footer>
 
     <!-- Side Drawer Overlay -->
@@ -213,81 +308,124 @@
             "Warm up by playing", "Notice what they do well"
         ];
 
-        summaryItems.forEach(item => {
-            const div = document.createElement('div');
-            div.className = "flex gap-4 items-center group";
-            div.innerHTML = `
-                <div class="w-8 h-8 rounded-full border border-teal/30 flex items-center justify-center text-teal text-[10px] font-black group-hover:bg-teal group-hover:text-stone transition-all">✓</div>
-                <span class="text-sm font-medium text-stone/80">${item}</span>
+        // Render Checklist with Interactive Style
+        summaryItems.forEach((item, idx) => {
+            const label = document.createElement('label');
+            label.className = "cb-container flex gap-6 items-center group cursor-pointer reveal-on-scroll";
+            label.style.animationDelay = `${idx * 100}ms`;
+            label.innerHTML = `
+                <div class="relative flex items-center justify-center">
+                    <input type="checkbox" class="peer absolute opacity-0 w-8 h-8 cursor-pointer z-10">
+                    <div class="cb-checkmark w-8 h-8 rounded-xl border-2 border-white/10 flex items-center justify-center text-stone transition-all duration-500 peer-checked:bg-teal peer-checked:border-teal group-hover:border-coral-light/50 shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 peer-checked:opacity-100 transition-opacity"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+                <span class="text-xl font-light text-stone/60 group-hover:text-stone transition-colors duration-300 select-none">${item}</span>
             `;
-            summaryChecklist.appendChild(div);
+            summaryChecklist.appendChild(label);
         });
 
-        const colors = ['bg-teal', 'bg-coral', 'bg-midnight'];
-
+        // Render Principles with Bento Logic
         principles.forEach((p, idx) => {
             const card = document.createElement('div');
-            card.className = "principle-card bg-white p-8 rounded-[2rem] shadow-sm border border-stone/10 cursor-pointer flex flex-col justify-between group";
+            
+            // Bento sizing logic
+            const isWide = [0, 4, 8, 12, 16].includes(idx);
+            const isTall = [1, 7, 13].includes(idx);
+            
+            card.className = `principle-card glass p-10 rounded-[2.5rem] cursor-pointer flex flex-col justify-between group reveal-on-scroll border-white/5 hover:border-coral-light/30 transition-all duration-500
+                ${isWide ? 'md:col-span-2' : ''} 
+                ${isTall ? 'md:row-span-2' : ''}`;
+            
+            card.style.animationDelay = `${(idx % 4) * 150}ms`;
             card.onclick = () => openDrawer(p);
             
-            const color = colors[idx % colors.length];
-            
             card.innerHTML = `
-                <div class="mb-10">
-                    <div class="w-10 h-1 ${color} rounded-full mb-8"></div>
-                    <span class="text-[10px] font-black text-midnight/20 block mb-3 uppercase tracking-widest">${String(p.id).padStart(2, '0')}</span>
-                    <h3 class="text-2xl font-black text-midnight leading-none tracking-tight mb-4 group-hover:text-teal transition-colors">${p.title}</h3>
-                    <p class="text-sm text-midnight/50 leading-relaxed font-medium">${p.desc}</p>
+                <div class="relative z-10">
+                    <div class="flex justify-between items-start mb-12">
+                        <span class="text-[10px] font-black text-midnight/20 px-3 py-1 rounded-full bg-midnight/5 uppercase tracking-[0.3em]">${String(p.id).padStart(2, '0')}</span>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal/20 to-coral/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-teal group-hover:text-coral transition-colors"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-display font-extrabold text-midnight leading-[0.9] tracking-tight mb-6 group-hover:translate-x-2 transition-transform duration-500">${p.title}</h3>
+                    <p class="text-lg text-midnight/40 leading-snug font-light line-clamp-3 group-hover:text-midnight/60 transition-colors">${p.desc}</p>
                 </div>
-                <div class="card-action flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-midnight/30 transition-all">
-                    Detail
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <div class="mt-12 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-coral-dark">View Details</span>
+                    <div class="w-8 h-8 rounded-full bg-coral-dark text-white flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
                 </div>
             `;
             grid.appendChild(card);
         });
 
+        // Intersection Observer for Scroll Animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
         function openDrawer(p) {
+            const drawer = document.getElementById('side-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            
             document.getElementById('drawer-num').innerText = String(p.id).padStart(2, '0');
             document.getElementById('drawer-title').innerText = p.title;
             
             let meansList = p.means.map(m => `
-                <li class="flex gap-4 items-start">
-                    <span class="w-1.5 h-1.5 rounded-full bg-teal mt-2 shrink-0"></span>
-                    <span class="text-base text-midnight/70 font-medium leading-tight">${m}</span>
+                <li class="flex gap-5 items-start group">
+                    <span class="w-6 h-6 rounded-lg bg-teal/5 text-teal flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-teal group-hover:text-white transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    <span class="text-lg text-midnight/60 font-light leading-tight group-hover:text-midnight transition-colors">${m}</span>
                 </li>
             `).join('');
-            
+
             document.getElementById('drawer-content').innerHTML = `
-                <div>
-                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-coral mb-6">Core Concept</h4>
-                    <p class="text-2xl leading-snug text-midnight/90 font-light text-balance">${p.detail}</p>
-                </div>
-                <div>
-                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-coral mb-6">Application</h4>
-                    <ul class="space-y-6">
-                        ${meansList}
-                    </ul>
-                </div>
-                <div class="bg-stone/50 p-8 rounded-[2rem] border border-midnight/5">
-                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-teal mb-4">Pro Strategy</h4>
-                    <p class="text-lg font-bold leading-tight text-midnight/80 italic">"${p.important}"</p>
+                <div class="space-y-12">
+                    <div class="space-y-6">
+                        <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-coral">Core Strategy</h4>
+                        <p class="text-2xl font-light leading-snug text-midnight/80 italic">"${p.detail}"</p>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-coral">Implementation</h4>
+                        <ul class="space-y-6">${meansList}</ul>
+                    </div>
+
+                    <div class="p-10 rounded-[2.5rem] bg-midnight text-stone relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-teal/20 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                        <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-teal-light mb-6">Pro Tip</h4>
+                        <p class="text-xl font-light leading-tight relative z-10">${p.important}</p>
+                    </div>
                 </div>
             `;
 
-            document.getElementById('side-drawer').classList.remove('drawer-hidden');
-            document.getElementById('side-drawer').classList.add('drawer-visible');
-            document.getElementById('drawer-overlay').classList.remove('opacity-0', 'pointer-events-none');
-            document.getElementById('drawer-overlay').classList.add('opacity-100');
+            overlay.classList.remove('pointer-events-none', 'opacity-0');
+            overlay.classList.add('opacity-100');
+            drawer.classList.remove('drawer-hidden');
+            drawer.classList.add('drawer-visible');
             document.body.style.overflow = 'hidden';
         }
 
         function closeDrawer() {
-            document.getElementById('side-drawer').classList.add('drawer-hidden');
-            document.getElementById('side-drawer').classList.remove('drawer-visible');
-            document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none');
-            document.getElementById('drawer-overlay').classList.remove('opacity-100');
-            document.body.style.overflow = 'auto';
+            const drawer = document.getElementById('side-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            
+            overlay.classList.add('pointer-events-none', 'opacity-0');
+            overlay.classList.remove('opacity-100');
+            drawer.classList.add('drawer-hidden');
+            drawer.classList.remove('drawer-visible');
+            document.body.style.overflow = '';
         }
     </script>
 </body>
